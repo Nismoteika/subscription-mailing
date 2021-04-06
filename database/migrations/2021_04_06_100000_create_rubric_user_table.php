@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserRubricTable extends Migration
+class CreateRubricUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateUserRubricTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_rubric', function (Blueprint $table) {
+        Schema::create('rubric_user', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('rubric_id');
-            $table->timestamps();
 
             $table->foreign('rubric_id')->references('id')->on('rubrics');
             $table->foreign('user_id')->references('id')->on('users');
@@ -31,6 +30,6 @@ class CreateUserRubricTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_rubric');
+        Schema::dropIfExists('rubric_user');
     }
 }
