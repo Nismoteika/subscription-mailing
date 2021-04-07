@@ -29,5 +29,11 @@ Route::prefix('auth')->group(function () {
 
 Route::group(['middleware' => 'auth:api'], function() {
     Route::apiResource('rubrics', RubricController::class);
+
+    Route::get('userSubs', [SubscribeController::class, 'usersBySubscriptions']);
+    Route::get('subsByUser', [SubscribeController::class, 'subscriptionsByUser']);
+
     Route::post('subscribe', [SubscribeController::class, 'subscribe']);
+    Route::post('unsubscribe', [SubscribeController::class, 'unsubscribeOne']);
+    Route::post('unsubscribeAll', [SubscribeController::class, 'unsubscribeAll']);
 });
