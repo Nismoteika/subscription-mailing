@@ -18,8 +18,10 @@ class CreateRubricUserTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('rubric_id');
 
-            $table->foreign('rubric_id')->references('id')->on('rubrics');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('rubric_id')->references('id')->on('rubrics');
+
+            $table->unique('user_id', 'rubric_id');
         });
     }
 
