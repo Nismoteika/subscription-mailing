@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel
                 $subscriberObj = User::find($subscriber_id->user_id);
                 $rubrics = $subscriberObj->rubrics()->get();
                 
-                Mail::to($subscriberObj->email)->send(new SpreadArticles($rubrics));
+                Mail::to($subscriberObj->email)->queue(new SpreadArticles($rubrics));
             }
         })->dailyAt('08:00');
     }
