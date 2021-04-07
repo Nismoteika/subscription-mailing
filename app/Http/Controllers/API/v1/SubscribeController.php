@@ -22,8 +22,8 @@ class SubscribeController extends Controller
     public function usersBySubscriptions(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'limit' => 'numeric',
-            'offset' => 'numeric',
+            'limit' => 'numeric|required',
+            'offset' => 'numeric|required',
             'rubric' => 'numeric|required',
         ]);
         
@@ -55,8 +55,8 @@ class SubscribeController extends Controller
     public function subscriptionsByUser(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'limit' => 'numeric',
-            'offset' => 'numeric',
+            'limit' => 'numeric|required',
+            'offset' => 'numeric|required',
         ]);
         
         if ($validator->fails()) {
