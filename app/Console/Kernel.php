@@ -4,6 +4,10 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+use App\Mail\SpreadArticles;
+use App\Models\User;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +28,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            $subscribers = DB::table('rubric_user')
+                ->select('user_id')
+                ->distinct('user_id')
+                ->get();
+
+            foreach ($subscribers as $subscriber_id) {
+                $subscriberObj = User::find($subscriber_id->user_id);
+                $rubrics = $subscriberObj->rubrics()->get();
+                
+                Mail::to($subscriberObj->email)->send(new SpreadArticles($rubrics));
+            }
+        })->dailyAt('08:00');
     }
 
     /**
